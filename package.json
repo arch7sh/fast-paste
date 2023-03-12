@@ -1,7 +1,7 @@
 {
   "name": "fast-paste",
   "displayName": "Fast Paste",
-  "description": "Paste code from another file quickly using typed commands and filenames",
+  "description": "Paste code from another file quickly using hotkeys and filenames",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.76.0"
@@ -10,7 +10,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:fast-paste.insertMode",
     "onStartupFinished"
   ],
   "main": "./dist/extension.js",
