@@ -1,23 +1,15 @@
-import {
-  TextEditorCursorStyle,
-  Position,
-  Range,
-  Selection,
-  TextEditor,
-  TextEditorRevealType,
-  window,
-} from "vscode";
+import { TextEditorCursorStyle, window } from "vscode";
 
-export enum Mode {
-  insert,
-  normal,
-}
-
-export class Controller {
-  public changeCursorStyle() {
+export class StyleControl {
+  public setCursorStyle(isNormalMode: boolean) {
     if (window.activeTextEditor) {
-      window.activeTextEditor.options.cursorStyle =
-        TextEditorCursorStyle.Underline;
+      if (isNormalMode) {
+        window.activeTextEditor.options.cursorStyle =
+          TextEditorCursorStyle.Line;
+      } else {
+        window.activeTextEditor.options.cursorStyle =
+          TextEditorCursorStyle.Underline;
+      }
     }
   }
 }

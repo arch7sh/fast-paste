@@ -10,16 +10,23 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:fast-paste.changeMode"
+    "onCommand:fast-paste.insertMode",
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "keybindings": [
       {
-        "command": "fast-paste.changeMode",
-        "key": "ctrl+i",
+        "command": "fast-paste.insertMode",
+        "key": "alt+i",
         "mac": "cmd+i",
-        "when": "editorTextFocus"
+        "when": "editorTextFocus && fast-paste.inNormalMode"
+      },
+      {
+        "command": "fast-paste.normalMode",
+        "key": "enter",
+        "mac": "enter",
+        "when": "editorTextFocus && !fast-paste.inNormalMode"
       }
     ]
   },
