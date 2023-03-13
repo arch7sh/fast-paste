@@ -8,3 +8,5 @@ export const comments = {
   apos: "'",
   default: "//",
 };
+
+export const tag = "fast-!-paste";

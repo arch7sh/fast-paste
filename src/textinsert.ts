@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { comments, languages } from "./common";
+import { comments, languages, tag } from "./common";
 import { TrackPosition } from "./trackposition";
 
 export class TextInsert {
@@ -15,16 +15,18 @@ export class TextInsert {
       this._editorLanguage = editor.document.languageId;
     }
   }
-  public insertText(text: string) {
-    const editor = vscode.window.activeTextEditor;
-    const pos = new TrackPosition(editor).getCursorLinePosition();
-    if (editor && pos) {
-      editor.edit((editBuilder) => {
-        editBuilder.insert(pos, text);
-      });
+  public insertText(text: string | undefined) {
+    if (text) {
+      const editor = vscode.window.activeTextEditor;
+      const pos = new TrackPosition(editor).getCursorLinePosition();
+      if (editor && pos) {
+        editor.edit((editBuilder) => {
+          editBuilder.insert(pos, text);
+        });
+      }
     }
   }
-  public insertTag() {
+  public getCommentSymbol() {
     this.getLanguage();
 
     if (this._editorLanguage in languages.hashComment) {
@@ -34,7 +36,10 @@ export class TextInsert {
     } else {
       this._commentSymbol = comments.default;
     }
-
-    this.insertText(`${this._commentSymbol}fast-!-paste`);
+    return this._commentSymbol;
+  }
+  public insertTag() {
+    const comment = this.getCommentSymbol();
+    this.insertText(`${comment}${tag}`);
   }
 }

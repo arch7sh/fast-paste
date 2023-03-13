@@ -63,7 +63,8 @@ class FastPaste {
     this.setCursorStyle(this.checkIsNormalMode());
     await this._search.showFiles();
     const fp = this._search.getFilePath();
-    this._fileReader.readFile(fp);
+    const text = this._fileReader.readFile(fp);
+    this._textInserter.insertText(text);
     vscode.commands.executeCommand("fast-paste.normalMode");
   }
   public setCursorStyle(isNormalMode: boolean) {
@@ -79,20 +80,6 @@ class FastPaste {
     this._textInserter.insertTag();
   }
   //Not used after this point
-
-  public fileQuickPick() {
-    this._search.showFiles();
-  }
-  public readFile() {
-    this._fileReader.readFile(this._search.getFilePath());
-  }
-  public updateFileName() {
-    const mode = this.checkIsNormalMode();
-    // this._search.updateFileName(mode);
-  }
-  public removeEditorListener() {
-    this._search.removeListener();
-  }
 }
 
 class ContextKey {

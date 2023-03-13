@@ -1,6 +1,7 @@
 {
   "name": "fast-paste",
   "displayName": "Fast Paste",
+  "publisher": "Archish",
   "description": "Paste code from another file quickly using hotkeys and filenames",
   "version": "0.0.1",
   "engines": {
