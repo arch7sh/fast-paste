@@ -2,6 +2,10 @@
   "name": "fast-paste",
   "displayName": "Fast Paste",
   "publisher": "Archish",
+  "repository": {
+    "type": "`git",
+    "url": "https://github.com/arch7sh/fast-paste"
+  },
   "description": "Paste code from another file quickly using hotkeys and filenames",
   "version": "0.0.1",
   "engines": {
