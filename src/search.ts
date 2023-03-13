@@ -2,13 +2,14 @@ import * as vscode from "vscode";
 import { TrackPosition } from "./trackposition";
 export class Search {
   private _fileList: string[];
-  private _fileName: string;
+  private _textChange: string;
+  private _filePath: string | undefined;
   public _editorListener: vscode.Disposable;
   private _tracker: TrackPosition;
   private _activeEditor: vscode.TextEditor | undefined;
   constructor() {
     this._fileList = [];
-    this._fileName = "";
+    this._textChange = "";
     this._editorListener = new vscode.Disposable(() => {});
     this._activeEditor = vscode.window.activeTextEditor;
     this._tracker = new TrackPosition(this._activeEditor);
@@ -18,14 +19,19 @@ export class Search {
     for (const file of files) {
       this._fileList.push(file.fsPath);
     }
-    console.log(this._fileList);
+    // console.log(this._fileList);
   }
-  public showFiles() {
-    vscode.window.showQuickPick(this._fileList, {
+  public async showFiles() {
+    const fpath = await vscode.window.showQuickPick(this._fileList, {
       placeHolder: "Files",
     });
+    this._filePath = fpath;
   }
-  public updateFileName(mode: boolean) {
+  public getFilePath() {
+    return this._filePath;
+  }
+  //Not required after this point
+  public trackDocumentChanges(mode: boolean) {
     if (this._activeEditor) {
       let pos = this._tracker.getCursorLinePosition();
       let prevPos = pos;
@@ -35,11 +41,11 @@ export class Search {
           pos = this._tracker.getCursorLinePosition();
           if (pos && prevPos) {
             if (pos.compareTo(prevPos) < 0) {
-              if (this._fileName.length > 0) {
-                this._fileName = this._fileName.slice(0, -1);
+              if (this._textChange.length > 0) {
+                this._textChange = this._textChange.slice(0, -1);
               }
             } else {
-              this._fileName += event.contentChanges[0].text;
+              this._textChange += event.contentChanges[0].text;
             }
           }
         }
@@ -48,7 +54,7 @@ export class Search {
   }
   public removeListener() {
     this._editorListener.dispose();
-    console.log(this._fileName);
-    this._fileName = "";
+    console.log(this._textChange);
+    this._textChange = "";
   }
 }

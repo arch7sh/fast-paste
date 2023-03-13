@@ -26,6 +26,12 @@
         "key": "enter",
         "mac": "enter",
         "when": "editorTextFocus && !fast-paste.inNormalMode"
+      },
+      {
+        "command": "fast-paste.insertTag",
+        "key": "alt+/",
+        "mac": "alt+/",
+        "when": "editorTextFocus && fast-paste.inNormalMode"
       }
     ]
   },
